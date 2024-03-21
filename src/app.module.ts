@@ -5,12 +5,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './modules/product/product.module';
 import { UserModule } from './modules/user/user.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmConfig } from './config/typeorm.config';
 
+// npm install @nestjs/typeorm typeorm mysql2 command aka
 
 @Module({
-  imports: [ProductModule, UserModule],
+  imports: [ProductModule, UserModule ,TypeOrmModule.forRoot(TypeOrmConfig) ], 
   controllers: [AppController],
-  providers: [
-    ProductServiseService, AppService],
+  providers: [AppService],
 })
 export class AppModule { }
