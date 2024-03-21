@@ -11,7 +11,7 @@ import { TypeOrmConfig } from './config/typeorm.config';
 // npm install @nestjs/typeorm typeorm mysql2 command aka
 
 @Module({
-  imports: [ProductModule, UserModule ,TypeOrmModule.forRoot(TypeOrmConfig) ], 
+  imports: [ProductModule, UserModule ,TypeOrmModule.forRoot(TypeOrmConfig) ],
   controllers: [AppController],
   providers: [AppService],
 })
