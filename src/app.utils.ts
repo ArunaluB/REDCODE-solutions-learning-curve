@@ -23,3 +23,6 @@ export const MESSAGES = {
 export const SETTINGS = {
   VALIDATION_PIPE,
 };
+
+
+//npm i bcrypt @types/bcrypt (hash data save command)

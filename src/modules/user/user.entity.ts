@@ -1,5 +1,5 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import * as bcrypt from 'bcrypt';
 @Entity('user')
 export class User extends BaseEntity {
 
@@ -16,6 +16,13 @@ export class User extends BaseEntity {
     created_at : Date
     @UpdateDateColumn()
     updated_at : Date
+
+    // subcribe use karala api insert wenna kalin hash karanna kiyanawa
+    @BeforeInsert()
+    async hashPassword(password : string) {
+      const salth =await bcrypt.genSalt();
+      this.password = await bcrypt.hash(password || this.password ,salth);
+    }
 }
 
 
