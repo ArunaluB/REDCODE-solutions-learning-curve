@@ -1,27 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { ProductDto } from './dto/product.dto';
 import { Product } from './entity/product.entity';
 import { Repository } from 'typeorm';
+import { UpdateProductParams } from '../../../dist/modules/utils/types';
 
 
 @Injectable()
 export class ProductServiseService {
 
+
   constructor(
     @InjectRepository(Product)
-    private productRepository: Repository<Product>, // Ensure that ProductRepository is accessible in the constructor parameter
+    private productRepository: Repository<Product>,
   ) {}
 
-  async getAllProducts() {
-    return await this.productRepository.find();
+
+  async getAllProductsLists() {
+      return await this.productRepository.find();
   }
 
   async addProduct(product: ProductDto) {
     const newProduct = this.productRepository.create(product);
     return await this.productRepository.save(newProduct);
-    // return product;
+
   }
 
+  async updateProduct(id: number,UpdateProductDetails:ProductDto){
+    return this.productRepository.update({id},UpdateProductDetails);
+  }
 }
