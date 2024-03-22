@@ -5,6 +5,7 @@ import { HttpStatus } from '@nestjs/common';
 import { ProductDto } from './dto/product.dto';
 import { promises } from 'dns';
 import { ManufacturerDto } from './dto/manufacturer.dto';
+import { suplierDto } from './dto/suplier.dto';
 
 // genaral controler path set
 @Controller('product')
@@ -40,4 +41,12 @@ export class ProductcontrollerController {
   async addManufacturer(@Param('id', ParseIntPipe) id:number,@Body()manufacturer:ManufacturerDto) {
     return await this.ProductServiseService.addmanufacturer(id,manufacturer);
   }
+
+  @Post(':id/suplier')
+  @UsePipes(ValidationPipe)
+  async addsuplier(@Param('id', ParseIntPipe) id:number,@Body()suplier:suplierDto) {
+    return await this.ProductServiseService.addsuplier(id,suplier);
+  }
+
+
 }

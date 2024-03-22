@@ -1,5 +1,6 @@
-import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Manufacturer } from "./manufacturer.entity";
+import { suplier } from "./suplier.entity";
 
 @Entity('product')
 export class Product extends BaseEntity {
@@ -28,4 +29,7 @@ export class Product extends BaseEntity {
   @OneToOne(()=> Manufacturer)
   @JoinColumn()
   manufacturer:Manufacturer;
+
+  @OneToMany(()=> suplier,(suplier)=>suplier.product)
+  supliers:suplier[];
 }

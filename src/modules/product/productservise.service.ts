@@ -4,9 +4,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ProductDto } from './dto/product.dto';
 import { Product } from './entity/product.entity';
 import { Repository } from 'typeorm';
-import { UpdateProductParams } from '../../../dist/modules/utils/types';
 import { ManufacturerDto } from './dto/manufacturer.dto';
 import { Manufacturer } from './entity/manufacturer.entity';
+import { suplierDto } from './dto/suplier.dto';
+import { suplier } from './entity/suplier.entity';
 
 
 @Injectable()
@@ -17,13 +18,15 @@ export class ProductServiseService {
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
     @InjectRepository(Manufacturer)
-    private manufacturerRepository: Repository<Manufacturer>
+    private manufacturerRepository: Repository<Manufacturer>,
+    @InjectRepository(suplier)
+    private suplierRepository: Repository<suplier>
   ) {}
 
 
   async getAllProductsLists() {
     // releation aka penway
-      return await this.productRepository.find({ relations: ['manufacturer'] });
+      return await this.productRepository.find({ relations: ['manufacturer','supliers'] });
   }
 
   async addProduct(product: ProductDto) {
@@ -50,6 +53,23 @@ export class ProductServiseService {
     const savedmanaufacturer = await this.manufacturerRepository.save(newmanufacturer);
     manufacturer.manufacturer=savedmanaufacturer;
     return await this.productRepository.save(manufacturer);
+  }
+
+
+
+  async addsuplier(id:number,suplierdetails:suplierDto) {
+    const product = await this.productRepository.findOneBy({ id });
+    if (!product) {
+      throw new BadRequestException('Invalid manufacturer id');
+    };
+
+    const newsuplier =this.suplierRepository.create({
+      ...suplierdetails,
+      product,
+
+    });
+    return this.suplierRepository.save(newsuplier); 
+
   }
 
 }
