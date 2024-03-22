@@ -1,9 +1,10 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Manufacturer } from "./manufacturer.entity";
 
 @Entity('product')
 export class Product extends BaseEntity {
 
-  
+
   @PrimaryGeneratedColumn({
     comment: 'The product id unique identifier',
   })
@@ -24,4 +25,7 @@ export class Product extends BaseEntity {
   })
   price: number;
 
+  @OneToOne(()=> Manufacturer)
+  @JoinColumn()
+  manufacturer:Manufacturer;
 }

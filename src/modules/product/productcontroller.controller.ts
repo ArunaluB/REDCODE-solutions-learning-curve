@@ -4,6 +4,7 @@ import { ProductServiseService } from './productservise.service';
 import { HttpStatus } from '@nestjs/common';
 import { ProductDto } from './dto/product.dto';
 import { promises } from 'dns';
+import { ManufacturerDto } from './dto/manufacturer.dto';
 
 // genaral controler path set
 @Controller('product')
@@ -33,5 +34,10 @@ export class ProductcontrollerController {
   @Delete(':id')
   DeleteProductById(@Param('id', ParseIntPipe) id: number) {
     return this.ProductServiseService.DeleteProduct(id);
+  }
+  @Post(':id/manu')
+  @UsePipes(ValidationPipe)
+  async addManufacturer(@Param('id', ParseIntPipe) id:number,@Body()manufacturer:ManufacturerDto) {
+    return await this.ProductServiseService.addmanufacturer(id,manufacturer);
   }
 }

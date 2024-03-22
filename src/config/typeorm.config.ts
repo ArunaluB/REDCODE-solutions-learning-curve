@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { Product } from "../modules/product/entity/product.entity"; // Import the 'Product' class from the appropriate module
+import { Product } from "../modules/product/entity/product.entity"; 
+import { Manufacturer } from "src/modules/product/entity/manufacturer.entity";
 
 export const TypeOrmConfig :TypeOrmModuleOptions = {
   type: 'mysql',
@@ -9,7 +10,7 @@ export const TypeOrmConfig :TypeOrmModuleOptions = {
   password: '12345',
   database: 'redcodesolutions',
   entities: [
-    Product
+    Product,Manufacturer
   ],
   synchronize: true,
 }
